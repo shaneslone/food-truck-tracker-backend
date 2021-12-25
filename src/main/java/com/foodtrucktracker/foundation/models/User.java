@@ -61,6 +61,8 @@ public class User
         allowSetters = true)
     private Set<UserRoles> roles = new HashSet<>();
 
+    private String currentLocation;
+
     /**
      * Default constructor used primarily by the JPA.
      */
@@ -196,12 +198,22 @@ public class User
         this.roles = roles;
     }
 
+    public String getCurrentLocation() {
+        return currentLocation;
+    }
+
+    public void setCurrentLocation(String currentLocation) {
+        this.currentLocation = currentLocation;
+    }
+
     /**
      * Internally, user security requires a list of authorities, roles, that the user has. This method is a simple way to provide those.
      * Note that SimpleGrantedAuthority requests the format ROLE_role name all in capital letters!
      *
      * @return The list of authorities, roles, this user object has
      */
+
+
     @JsonIgnore
     public List<SimpleGrantedAuthority> getAuthority()
     {
