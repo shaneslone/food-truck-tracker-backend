@@ -63,6 +63,18 @@ public class User
 
     private String currentLocation;
 
+    @OneToMany(mappedBy = "operator",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    @JsonIgnoreProperties(value = "operator", allowSetters = true)
+    private Set<Truck> ownedTrucks;
+
+    @OneToMany(mappedBy = "diner",
+    cascade = CascadeType.ALL,
+    orphanRemoval = true)
+    @JsonIgnoreProperties(value = "diner", allowSetters = true)
+    private Set<DinerTrucks> favoriteTrucks;
+
     /**
      * Default constructor used primarily by the JPA.
      */
@@ -204,6 +216,22 @@ public class User
 
     public void setCurrentLocation(String currentLocation) {
         this.currentLocation = currentLocation;
+    }
+
+    public Set<Truck> getOwnedTrucks() {
+        return ownedTrucks;
+    }
+
+    public void setOwnedTrucks(Set<Truck> ownedTrucks) {
+        this.ownedTrucks = ownedTrucks;
+    }
+
+    public Set<DinerTrucks> getFavoriteTrucks() {
+        return favoriteTrucks;
+    }
+
+    public void setFavoriteTrucks(Set<DinerTrucks> favoriteTrucks) {
+        this.favoriteTrucks = favoriteTrucks;
     }
 
     /**
