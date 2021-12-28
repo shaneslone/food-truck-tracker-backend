@@ -39,7 +39,7 @@ public class Truck
     cascade = CascadeType.ALL,
     orphanRemoval = true)
     @JsonIgnoreProperties(value = "truck", allowSetters = true)
-    private Set<DinerTrucks> dinerFavorites;
+    private Set<DinerTrucks> dinerFavorites = new HashSet<>();
 
     @OneToMany(mappedBy = "truck",
     cascade = CascadeType.ALL,
@@ -50,7 +50,7 @@ public class Truck
 
     @OneToMany(mappedBy = "truck", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties(value = "truck", allowSetters = true)
-    private List<TruckReview> reviews;
+    private Set<DinerTruckReview> reviews = new HashSet<>();
 
     private int customerRatingsAvg;
 
@@ -138,11 +138,11 @@ public class Truck
         this.menu = menu;
     }
 
-    public List<TruckReview> getReviews() {
+    public Set<DinerTruckReview> getReviews() {
         return reviews;
     }
 
-    public void setReviews(List<TruckReview> reviews) {
+    public void setReviews(Set<DinerTruckReview> reviews) {
         this.reviews = reviews;
     }
 

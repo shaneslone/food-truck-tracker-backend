@@ -41,4 +41,78 @@ public class MenuItem
     private List<MenuItemReview> customerRatings;
 
     private int customerRatingsAvg;
+
+    public MenuItem() {
+    }
+
+    public MenuItem(Truck truck, String itemName, String itemDescription, int itemPrice) {
+        this.truck = truck;
+        this.itemName = itemName;
+        this.itemDescription = itemDescription;
+        this.itemPrice = itemPrice;
+    }
+
+    public long getMenuId() {
+        return menuId;
+    }
+
+    public void setMenuId(long menuId) {
+        this.menuId = menuId;
+    }
+
+    public Truck getTruck() {
+        return truck;
+    }
+
+    public void setTruck(Truck truck) {
+        this.truck = truck;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
+    public String getItemDescription() {
+        return itemDescription;
+    }
+
+    public void setItemDescription(String itemDescription) {
+        this.itemDescription = itemDescription;
+    }
+
+    public int getItemPrice() {
+        return itemPrice;
+    }
+
+    public void setItemPrice(int itemPrice) {
+        this.itemPrice = itemPrice;
+    }
+
+    public List<MenuItemPhoto> getItemPhotos() {
+        return itemPhotos;
+    }
+
+    public void setItemPhotos(List<MenuItemPhoto> itemPhotos) {
+        this.itemPhotos = itemPhotos;
+    }
+
+    public List<MenuItemReview> getCustomerRatings() {
+        return customerRatings;
+    }
+
+    public void setCustomerRatings(List<MenuItemReview> customerRatings) {
+        this.customerRatings = customerRatings;
+    }
+
+    public int getCustomerRatingsAvg() {
+        return customerRatingsAvg;
+    }
+
+    public void setCustomerRatingsAvg(int customerRatingsAvg) {
+        this.customerRatingsAvg = customerRatingsAvg;
+    }
 }

@@ -75,6 +75,12 @@ public class User
     @JsonIgnoreProperties(value = "diner", allowSetters = true)
     private Set<DinerTrucks> favoriteTrucks;
 
+    @OneToMany(mappedBy = "diner",
+    cascade = CascadeType.ALL,
+    orphanRemoval = true)
+    @JsonIgnoreProperties(value = "diner", allowSetters = true)
+    private Set<DinerTruckReview> truckReviews = new HashSet<>();
+
     /**
      * Default constructor used primarily by the JPA.
      */
@@ -232,6 +238,14 @@ public class User
 
     public void setFavoriteTrucks(Set<DinerTrucks> favoriteTrucks) {
         this.favoriteTrucks = favoriteTrucks;
+    }
+
+    public Set<DinerTruckReview> getTruckReviews() {
+        return truckReviews;
+    }
+
+    public void setTruckReviews(Set<DinerTruckReview> truckReviews) {
+        this.truckReviews = truckReviews;
     }
 
     /**

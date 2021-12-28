@@ -1,9 +1,8 @@
 package com.foodtrucktracker.foundation;
 
-import com.foodtrucktracker.foundation.models.Role;
-import com.foodtrucktracker.foundation.models.User;
-import com.foodtrucktracker.foundation.models.UserRoles;
+import com.foodtrucktracker.foundation.models.*;
 import com.foodtrucktracker.foundation.services.RoleService;
+import com.foodtrucktracker.foundation.services.TruckService;
 import com.foodtrucktracker.foundation.services.UserService;
 import com.github.javafaker.Faker;
 import com.github.javafaker.service.FakeValuesService;
@@ -14,6 +13,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -44,6 +44,9 @@ public class SeedData
     @Autowired
     UserService userService;
 
+    @Autowired
+    TruckService truckService;
+
     /**
      * Generates test, seed data for our application
      * First a set of known data is seeded into our database.
@@ -61,8 +64,8 @@ public class SeedData
         userService.deleteAll();
         roleService.deleteAll();
         Role r1 = new Role("admin");
-        Role r2 = new Role("user");
-        Role r3 = new Role("data");
+        Role r2 = new Role("diner");
+        Role r3 = new Role("operator");
 
         r1 = roleService.save(r1);
         r2 = roleService.save(r2);
@@ -82,7 +85,7 @@ public class SeedData
             .add(new UserRoles(u1,
                 r3));
 
-        userService.save(u1);
+        u1 = userService.save(u1);
 
         // data, user
         User u2 = new User("cinnamon",
@@ -120,6 +123,16 @@ public class SeedData
             .add(new UserRoles(u5,
                 r2));
         userService.save(u5);
+
+        Truck t1 = new Truck("Pink Taco",
+                null,
+                "Mexican",
+                "12345678,12345678",
+                new Date(),
+                u1);
+        t1.getReviews().add(new DinerTruckReview(u1, t1, 5));
+        truckService.save(t1);
+
 
         if (false)
         {
