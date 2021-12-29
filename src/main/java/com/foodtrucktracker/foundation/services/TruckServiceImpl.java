@@ -71,11 +71,16 @@ public class TruckServiceImpl  implements TruckService{
                     .add(new DinerTrucks(diner, newTruck));
         }
 
+        double reviewTotal = 0;
+
         for(DinerTruckReview dtr : truck.getReviews()){
             User user = userService.findUserById(dtr.getDiner().getUserid());
+            reviewTotal += dtr.getScore();
             newTruck.getReviews()
                     .add(new DinerTruckReview(user, newTruck, dtr.getScore()));
         }
+
+        newTruck.setCustomerRatingsAvg(reviewTotal / newTruck.getReviews().size());
 
         return truckRepository.save(newTruck);
     }

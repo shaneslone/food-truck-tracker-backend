@@ -74,7 +74,8 @@ public class SeedData
         // admin, data, user
         User u1 = new User("admin",
             "password",
-            "admin@lambdaschool.local");
+            "admin@lambdaschool.local",
+                "12345678,12345678");
         u1.getRoles()
             .add(new UserRoles(u1,
                 r1));
@@ -90,39 +91,43 @@ public class SeedData
         // data, user
         User u2 = new User("cinnamon",
             "1234567",
-            "cinnamon@lambdaschool.local");
+            "cinnamon@lambdaschool.local",
+                "12345678,12345678");
         u2.getRoles()
             .add(new UserRoles(u2,
                 r2));
         u2.getRoles()
             .add(new UserRoles(u2,
                 r3));
-        userService.save(u2);
+        u2 = userService.save(u2);
 
         // user
         User u3 = new User("barnbarn",
             "ILuvM4th!",
-            "barnbarn@lambdaschool.local");
+            "barnbarn@lambdaschool.local",
+                "12345678,12345678");
         u3.getRoles()
             .add(new UserRoles(u3,
                 r2));
-        userService.save(u3);
+        u3 = userService.save(u3);
 
         User u4 = new User("puttat",
             "password",
-            "puttat@school.lambda");
+            "puttat@school.lambda",
+                "12345678,12345678");
         u4.getRoles()
             .add(new UserRoles(u4,
                 r2));
-        userService.save(u4);
+        u4 = userService.save(u4);
 
         User u5 = new User("misskitty",
             "password",
-            "misskitty@school.lambda");
+            "misskitty@school.lambda",
+                "12345678,12345678");
         u5.getRoles()
             .add(new UserRoles(u5,
                 r2));
-        userService.save(u5);
+        u5 = userService.save(u5);
 
         Truck t1 = new Truck("Pink Taco",
                 null,
@@ -131,6 +136,7 @@ public class SeedData
                 new Date(),
                 u1);
         t1.getReviews().add(new DinerTruckReview(u1, t1, 5));
+        t1.getReviews().add(new DinerTruckReview(u2, t1, 4));
         truckService.save(t1);
 
 
@@ -153,7 +159,8 @@ public class SeedData
                     .username(),
                     "password",
                     nameFaker.internet()
-                        .emailAddress());
+                        .emailAddress(),
+                        "12345678,12345678");
                 fakeUser.getRoles()
                     .add(new UserRoles(fakeUser,
                         r2));

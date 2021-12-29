@@ -1,10 +1,8 @@
 package com.foodtrucktracker.foundation.services;
 
 import com.foodtrucktracker.foundation.exceptions.ResourceNotFoundException;
+import com.foodtrucktracker.foundation.models.*;
 import com.foodtrucktracker.foundation.repository.UserRepository;
-import com.foodtrucktracker.foundation.models.Role;
-import com.foodtrucktracker.foundation.models.User;
-import com.foodtrucktracker.foundation.models.UserRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.resource.OAuth2AccessDeniedException;
 import org.springframework.stereotype.Service;
@@ -33,6 +31,9 @@ public class UserServiceImpl
      */
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private TruckService truckService;
 
     @Autowired
     private HelperFunctions helperFunctions;
@@ -102,6 +103,7 @@ public class UserServiceImpl
         newUser.setPasswordNoEncrypt(user.getPassword());
         newUser.setEmail(user.getEmail()
             .toLowerCase());
+        newUser.setCurrentLocation(user.getCurrentLocation());
 
         newUser.getRoles()
             .clear();
@@ -112,6 +114,21 @@ public class UserServiceImpl
             newUser.getRoles()
                 .add(new UserRoles(newUser,
                     addRole));
+        }
+
+        for(Truck t: user.getOwnedTrucks()){
+            Truck truck = truckService.findTruckById(t.getTruckId());
+            newUser.getOwnedTrucks().add(truck);
+        }
+
+        for(DinerTrucks dt : user.getFavoriteTrucks()){
+            Truck truck = truckService.findTruckById(dt.getTruck().getTruckId());
+            newUser.getFavoriteTrucks().add(new DinerTrucks(newUser, truck));
+        }
+
+        for(DinerTruckReview dtr: user.getTruckReviews()){
+            Truck truck = truckService.findTruckById(dtr.getTruck().getTruckId());
+            newUser.getTruckReviews().add(new DinerTruckReview(newUser, truck, dtr.getScore()));
         }
 
         return userrepos.save(newUser);

@@ -20,7 +20,7 @@ public class DinerTruckReview extends Auditable implements Serializable {
     @Id
     @ManyToOne
     @JoinColumn(name = "truckId")
-    @JsonIgnoreProperties(value = "reviews", allowSetters = true)
+    @JsonIgnoreProperties(value = {"reviews", "operator"}, allowSetters = true)
     private Truck truck;
 
     @Min(value = 0)

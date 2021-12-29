@@ -59,7 +59,8 @@ public class UserServiceImplNoDBTest
         // admin, data, user
         User u1 = new User("admin",
             "ILuvM4th!",
-            "admin@lambdaschool.test");
+            "admin@lambdaschool.test",
+                "12345678,12345678");
         u1.getRoles()
             .add(new UserRoles(u1,
                 r1));
@@ -77,7 +78,8 @@ public class UserServiceImplNoDBTest
         ArrayList<UserRoles> datas = new ArrayList<>();
         User u2 = new User("cinnamon",
             "1234567",
-            "cinnamon@lambdaschool.test");
+            "cinnamon@lambdaschool.test",
+                "12345678,12345678");
         u1.getRoles()
             .add(new UserRoles(u2,
                 r2));
@@ -91,7 +93,8 @@ public class UserServiceImplNoDBTest
         // user
         User u3 = new User("testingbarn",
             "ILuvM4th!",
-            "testingbarn@school.lambda");
+            "testingbarn@school.lambda",
+                "12345678,12345678");
         u3.getRoles()
             .add(new UserRoles(u3,
                 r1));
@@ -101,7 +104,8 @@ public class UserServiceImplNoDBTest
 
         User u4 = new User("testingcat",
             "password",
-            "testingcat@school.lambda");
+            "testingcat@school.lambda",
+                "12345678,12345678");
         u4.getRoles()
             .add(new UserRoles(u4,
                 r2));
@@ -111,7 +115,8 @@ public class UserServiceImplNoDBTest
 
         User u5 = new User("testingdog",
             "password",
-            "testingdog@school.lambda");
+            "testingdog@school.lambda",
+                "12345678,12345678");
         u4.getRoles()
             .add(new UserRoles(u5,
                 r2));
@@ -226,7 +231,8 @@ public class UserServiceImplNoDBTest
 
         User u2 = new User("tiger",
             "ILuvMath!",
-            "tiger@school.lambda");
+            "tiger@school.lambda",
+                "12345678,12345678");
         u2.getRoles()
             .add(new UserRoles(u2,
                 r2));
@@ -250,7 +256,8 @@ public class UserServiceImplNoDBTest
 
         User u2 = new User("tiger",
             "ILuvMath!",
-            "tiger@school.lambda");
+            "tiger@school.lambda",
+                "12345678,12345678");
         u2.getRoles()
             .add(new UserRoles(u2,
                 r2));
@@ -278,7 +285,8 @@ public class UserServiceImplNoDBTest
 
         User u2 = new User("cinnamon",
             "password",
-            "cinnamon@school.lambda");
+            "cinnamon@school.lambda",
+                "12345678,12345678");
         u2.getRoles()
             .add(new UserRoles(u2,
                 r2));
@@ -309,7 +317,8 @@ public class UserServiceImplNoDBTest
 
         User u2 = new User("cinnamon",
             "password",
-            "cinnamon@school.lambda");
+            "cinnamon@school.lambda",
+                "12345678,12345678");
         u2.getRoles()
             .add(new UserRoles(u2,
                 r2));

@@ -52,7 +52,7 @@ public class Truck
     @JsonIgnoreProperties(value = "truck", allowSetters = true)
     private Set<DinerTruckReview> reviews = new HashSet<>();
 
-    private int customerRatingsAvg;
+    private double customerRatingsAvg;
 
     public Truck() {
     }
@@ -146,11 +146,11 @@ public class Truck
         this.reviews = reviews;
     }
 
-    public int getCustomerRatingsAvg() {
+    public double getCustomerRatingsAvg() {
         return customerRatingsAvg;
     }
 
-    public void setCustomerRatingsAvg(int customerRatingsAvg) {
+    public void setCustomerRatingsAvg(double customerRatingsAvg) {
         this.customerRatingsAvg = customerRatingsAvg;
     }
 }

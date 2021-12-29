@@ -61,19 +61,20 @@ public class User
         allowSetters = true)
     private Set<UserRoles> roles = new HashSet<>();
 
+    @Column(nullable = false)
     private String currentLocation;
 
     @OneToMany(mappedBy = "operator",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     @JsonIgnoreProperties(value = "operator", allowSetters = true)
-    private Set<Truck> ownedTrucks;
+    private Set<Truck> ownedTrucks = new HashSet<>();
 
     @OneToMany(mappedBy = "diner",
     cascade = CascadeType.ALL,
     orphanRemoval = true)
     @JsonIgnoreProperties(value = "diner", allowSetters = true)
-    private Set<DinerTrucks> favoriteTrucks;
+    private Set<DinerTrucks> favoriteTrucks = new HashSet<>();
 
     @OneToMany(mappedBy = "diner",
     cascade = CascadeType.ALL,
@@ -100,11 +101,13 @@ public class User
     public User(
         String username,
         String password,
-        String email)
+        String email,
+        String currentLocation)
     {
         setUsername(username);
         setPassword(password);
         this.email = email;
+        this.currentLocation = currentLocation;
     }
 
     /**
