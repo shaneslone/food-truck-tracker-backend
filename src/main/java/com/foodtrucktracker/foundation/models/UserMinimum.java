@@ -22,7 +22,11 @@ public class UserMinimum
      * The user's primary email address (String)
      */
     @Email
-    private String primaryemail;
+    private String email;
+
+    private String currentLocation;
+
+    private String accountType;
 
     /**
      * Getter for the username
@@ -70,18 +74,34 @@ public class UserMinimum
      *
      * @return the email address (String) for this user
      */
-    public String getPrimaryemail()
+    public String getEmail()
     {
-        return primaryemail;
+        return email;
     }
 
     /**
      * Setter for email for this user
      *
-     * @param primaryemail the new email address (String) for this user.
+     * @param email the new email address (String) for this user.
      */
-    public void setPrimaryemail(String primaryemail)
+    public void setEmail(String email)
     {
-        this.primaryemail = primaryemail;
+        this.email = email;
+    }
+
+    public String getCurrentLocation() {
+        return currentLocation;
+    }
+
+    public void setCurrentLocation(String currentLocation) {
+        this.currentLocation = currentLocation;
+    }
+
+    public String getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
     }
 }

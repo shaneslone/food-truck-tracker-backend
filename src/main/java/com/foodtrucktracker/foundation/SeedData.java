@@ -1,5 +1,6 @@
 package com.foodtrucktracker.foundation;
 
+import com.foodtrucktracker.foundation.constants.RoleValues;
 import com.foodtrucktracker.foundation.models.*;
 import com.foodtrucktracker.foundation.services.RoleService;
 import com.foodtrucktracker.foundation.services.TruckService;
@@ -15,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.Locale;
+
+import static com.foodtrucktracker.foundation.constants.RoleValues.*;
 
 /**
  * SeedData puts both known and random data into the database. It implements CommandLineRunner.
@@ -63,9 +66,9 @@ public class SeedData
     {
         userService.deleteAll();
         roleService.deleteAll();
-        Role r1 = new Role("admin");
-        Role r2 = new Role("diner");
-        Role r3 = new Role("operator");
+        Role r1 = new Role(ADMIN.getRoleName());
+        Role r2 = new Role(DINER.getRoleName());
+        Role r3 = new Role(OPERATOR.getRoleName());
 
         r1 = roleService.save(r1);
         r2 = roleService.save(r2);

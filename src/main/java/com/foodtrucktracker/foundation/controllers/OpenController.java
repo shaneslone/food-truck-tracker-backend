@@ -1,5 +1,6 @@
 package com.foodtrucktracker.foundation.controllers;
 
+import com.foodtrucktracker.foundation.constants.RoleValues;
 import com.foodtrucktracker.foundation.models.User;
 import com.foodtrucktracker.foundation.models.UserMinimum;
 import com.foodtrucktracker.foundation.models.UserRoles;
@@ -25,6 +26,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static com.foodtrucktracker.foundation.constants.RoleValues.DINER;
+import static com.foodtrucktracker.foundation.constants.RoleValues.OPERATOR;
 
 /**
  * The class allows access to endpoints that are open to all users regardless of authentication status.
@@ -69,12 +73,18 @@ public class OpenController
 
         newuser.setUsername(newminuser.getUsername());
         newuser.setPassword(newminuser.getPassword());
-        newuser.setEmail(newminuser.getPrimaryemail());
+        newuser.setEmail(newminuser.getEmail());
+        newuser.setCurrentLocation(newminuser.getCurrentLocation());
 
         // add the default role of user
         Set<UserRoles> newRoles = new HashSet<>();
-        newRoles.add(new UserRoles(newuser,
-            roleService.findByName("user")));
+        if(newminuser.getAccountType().equals(OPERATOR.getRoleName())) {
+            newRoles.add(new UserRoles(newuser,
+                    roleService.findByName(OPERATOR.getRoleName())));
+        } else {
+            newRoles.add(new UserRoles(newuser,
+                    roleService.findByName(DINER.getRoleName())));
+        }
         newuser.setRoles(newRoles);
 
         newuser = userService.save(newuser);
