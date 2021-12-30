@@ -26,7 +26,7 @@ public class MenuItem
     private String itemDescription;
 
     @Column(nullable = false)
-    private int itemPrice;
+    private double itemPrice;
 
     @OneToMany(mappedBy = "menuItem",
                cascade = CascadeType.ALL,
@@ -45,7 +45,7 @@ public class MenuItem
     public MenuItem() {
     }
 
-    public MenuItem(Truck truck, String itemName, String itemDescription, int itemPrice) {
+    public MenuItem(Truck truck, String itemName, String itemDescription, double itemPrice) {
         this.truck = truck;
         this.itemName = itemName;
         this.itemDescription = itemDescription;
@@ -84,11 +84,11 @@ public class MenuItem
         this.itemDescription = itemDescription;
     }
 
-    public int getItemPrice() {
+    public double getItemPrice() {
         return itemPrice;
     }
 
-    public void setItemPrice(int itemPrice) {
+    public void setItemPrice(double itemPrice) {
         this.itemPrice = itemPrice;
     }
 

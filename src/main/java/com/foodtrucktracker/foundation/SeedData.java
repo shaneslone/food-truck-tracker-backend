@@ -2,6 +2,7 @@ package com.foodtrucktracker.foundation;
 
 import com.foodtrucktracker.foundation.constants.RoleValues;
 import com.foodtrucktracker.foundation.models.*;
+import com.foodtrucktracker.foundation.services.MenuItemService;
 import com.foodtrucktracker.foundation.services.RoleService;
 import com.foodtrucktracker.foundation.services.TruckService;
 import com.foodtrucktracker.foundation.services.UserService;
@@ -49,6 +50,9 @@ public class SeedData
 
     @Autowired
     TruckService truckService;
+
+    @Autowired
+    MenuItemService menuItemService;
 
     /**
      * Generates test, seed data for our application
@@ -140,8 +144,13 @@ public class SeedData
                 u1);
         t1.getReviews().add(new DinerTruckReview(u1, t1, 5));
         t1.getReviews().add(new DinerTruckReview(u2, t1, 4));
-        truckService.save(t1);
+        t1 = truckService.save(t1);
 
+        MenuItem m1 = new MenuItem(t1,
+                "Taco",
+                "It's a crunchy taco!",
+                1.99);
+        m1 = menuItemService.save(m1);
 
         if (false)
         {

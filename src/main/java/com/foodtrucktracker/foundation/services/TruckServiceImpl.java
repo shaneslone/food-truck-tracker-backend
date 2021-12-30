@@ -19,8 +19,8 @@ public class TruckServiceImpl  implements TruckService{
     @Autowired
     private UserService userService;
 
-//    @Autowired
-//    private MenuItemService menuItemService;
+    @Autowired
+    private MenuItemService menuItemService;
 
     @Override
     public List<Truck> findAll() {
@@ -60,10 +60,10 @@ public class TruckServiceImpl  implements TruckService{
 
         newTruck.setDepartureTime(truck.getDepartureTime());
 
-//        for(MenuItem mi : truck.getMenu()){
-//            MenuItem menuItem = menuItemService.findMenuItemById(mi.getMenuId());
-//            newTruck.getMenu().add(menuItem);
-//        }
+        for(MenuItem mi : truck.getMenu()){
+            MenuItem menuItem = menuItemService.findMenuItemById(mi.getMenuId());
+            newTruck.getMenu().add(menuItem);
+        }
 
         for (DinerTrucks dt: truck.getDinerFavorites()){
             User diner = userService.findUserById(dt.getDiner().getUserid());
