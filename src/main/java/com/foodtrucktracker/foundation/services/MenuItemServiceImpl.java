@@ -2,7 +2,9 @@ package com.foodtrucktracker.foundation.services;
 
 import com.foodtrucktracker.foundation.exceptions.ResourceNotFoundException;
 import com.foodtrucktracker.foundation.models.MenuItem;
+import com.foodtrucktracker.foundation.models.MenuItemReview;
 import com.foodtrucktracker.foundation.models.Truck;
+import com.foodtrucktracker.foundation.models.User;
 import com.foodtrucktracker.foundation.repository.MenuItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,9 @@ public class MenuItemServiceImpl implements MenuItemService{
 
     @Autowired
     private TruckService truckService;
+
+    @Autowired
+    private UserService userService;
 
     @Override
     public List<MenuItem> findAll() {
@@ -55,6 +60,16 @@ public class MenuItemServiceImpl implements MenuItemService{
 
         Truck truck = truckService.findTruckById(menuItem.getTruck().getTruckId());
         newMenuItem.setTruck(truck);
+
+        double totalScore = 0;
+
+        for(MenuItemReview mir: menuItem.getCustomerRatings()){
+            User diner = userService.findUserById(mir.getDiner().getUserid());
+            totalScore += mir.getScore();
+            newMenuItem.getCustomerRatings().add(new MenuItemReview(diner, newMenuItem, mir.getScore()));
+        }
+
+        newMenuItem.setCustomerRatingsAvg(totalScore > 0 ? totalScore / newMenuItem.getCustomerRatings().size() : 0);
 
         return menuItemRepository.save(newMenuItem);
     }

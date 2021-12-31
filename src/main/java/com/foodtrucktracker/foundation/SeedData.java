@@ -146,11 +146,24 @@ public class SeedData
         t1.getReviews().add(new DinerTruckReview(u2, t1, 4));
         t1 = truckService.save(t1);
 
+        Truck t2 = new Truck("Bruno's Pizza",
+                null,
+                "Pizza",
+                "12345678,12345678",
+                new Date(),
+                u2);
+        t2 = truckService.save(t2);
+
         MenuItem m1 = new MenuItem(t1,
                 "Taco",
                 "It's a crunchy taco!",
                 1.99);
         m1 = menuItemService.save(m1);
+        m1.getCustomerRatings().add(new MenuItemReview(u1, m1, 5));
+        menuItemService.save(m1);
+
+        u1.getFavoriteTrucks().add(new DinerTrucks(u1, t2));
+        u1 = userService.save(u1);
 
         if (false)
         {

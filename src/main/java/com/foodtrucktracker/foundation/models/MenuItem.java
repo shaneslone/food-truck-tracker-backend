@@ -3,7 +3,9 @@ package com.foodtrucktracker.foundation.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "menuItems")
@@ -38,9 +40,9 @@ public class MenuItem
                cascade = CascadeType.ALL,
                orphanRemoval = true)
     @JsonIgnoreProperties(value = "customerRatings", allowSetters = true)
-    private List<MenuItemReview> customerRatings;
+    private Set<MenuItemReview> customerRatings = new HashSet<>();
 
-    private int customerRatingsAvg;
+    private double customerRatingsAvg;
 
     public MenuItem() {
     }
@@ -100,19 +102,19 @@ public class MenuItem
         this.itemPhotos = itemPhotos;
     }
 
-    public List<MenuItemReview> getCustomerRatings() {
+    public Set<MenuItemReview> getCustomerRatings() {
         return customerRatings;
     }
 
-    public void setCustomerRatings(List<MenuItemReview> customerRatings) {
+    public void setCustomerRatings(Set<MenuItemReview> customerRatings) {
         this.customerRatings = customerRatings;
     }
 
-    public int getCustomerRatingsAvg() {
+    public double getCustomerRatingsAvg() {
         return customerRatingsAvg;
     }
 
-    public void setCustomerRatingsAvg(int customerRatingsAvg) {
+    public void setCustomerRatingsAvg(double customerRatingsAvg) {
         this.customerRatingsAvg = customerRatingsAvg;
     }
 }

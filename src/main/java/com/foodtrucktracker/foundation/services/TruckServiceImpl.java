@@ -80,7 +80,7 @@ public class TruckServiceImpl  implements TruckService{
                     .add(new DinerTruckReview(user, newTruck, dtr.getScore()));
         }
 
-        newTruck.setCustomerRatingsAvg(reviewTotal / newTruck.getReviews().size());
+        newTruck.setCustomerRatingsAvg(reviewTotal > 0 ? reviewTotal / newTruck.getReviews().size() : 0);
 
         return truckRepository.save(newTruck);
     }
