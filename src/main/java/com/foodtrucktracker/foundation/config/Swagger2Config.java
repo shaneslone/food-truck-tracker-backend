@@ -45,11 +45,11 @@ public class Swagger2Config
      */
     private ApiInfo apiEndPointsInfo()
     {
-        return new ApiInfoBuilder().title("User Model Example")
-            .description("User Model Example")
-            .contact(new Contact("John Mitchell",
-                "http://www.bloomtech.com",
-                "john@bloomtech.com"))
+        return new ApiInfoBuilder().title("Food Truck Tracker")
+            .description("Spring Boot backend server for Food Truck Tracker.")
+            .contact(new Contact("Shane Slone",
+                "http://www.foodtrucktracker.com",
+                "slone.shane@gmail.com"))
             .license("MIT")
             .licenseUrl("https://github.com/BloomInstituteOfTechnology/java-usermodel/blob/master/LICENSE")
             .version("1.0.0")
