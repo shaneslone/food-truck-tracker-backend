@@ -158,6 +158,7 @@ public class SeedData
                 "Taco",
                 "It's a crunchy taco!",
                 1.99);
+        m1.getItemPhotos().add(new MenuItemPhoto(m1, "http://test.com/image.png"));
         m1 = menuItemService.save(m1);
         m1.getCustomerRatings().add(new MenuItemReview(u1, m1, 5));
         menuItemService.save(m1);

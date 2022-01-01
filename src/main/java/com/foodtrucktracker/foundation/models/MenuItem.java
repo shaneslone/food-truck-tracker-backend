@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -33,8 +32,8 @@ public class MenuItem
     @OneToMany(mappedBy = "menuItem",
                cascade = CascadeType.ALL,
                orphanRemoval = true)
-    @JsonIgnoreProperties(value = "itemPhotos", allowSetters = true)
-    private List<MenuItemPhoto> itemPhotos;
+    @JsonIgnoreProperties(value = "menuItem", allowSetters = true)
+    private Set<MenuItemPhoto> itemPhotos = new HashSet<>();
 
     @OneToMany(mappedBy = "menuItem",
                cascade = CascadeType.ALL,
@@ -94,11 +93,11 @@ public class MenuItem
         this.itemPrice = itemPrice;
     }
 
-    public List<MenuItemPhoto> getItemPhotos() {
+    public Set<MenuItemPhoto> getItemPhotos() {
         return itemPhotos;
     }
 
-    public void setItemPhotos(List<MenuItemPhoto> itemPhotos) {
+    public void setItemPhotos(Set<MenuItemPhoto> itemPhotos) {
         this.itemPhotos = itemPhotos;
     }
 

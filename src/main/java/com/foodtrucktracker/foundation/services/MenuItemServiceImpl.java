@@ -1,10 +1,7 @@
 package com.foodtrucktracker.foundation.services;
 
 import com.foodtrucktracker.foundation.exceptions.ResourceNotFoundException;
-import com.foodtrucktracker.foundation.models.MenuItem;
-import com.foodtrucktracker.foundation.models.MenuItemReview;
-import com.foodtrucktracker.foundation.models.Truck;
-import com.foodtrucktracker.foundation.models.User;
+import com.foodtrucktracker.foundation.models.*;
 import com.foodtrucktracker.foundation.repository.MenuItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,6 +57,10 @@ public class MenuItemServiceImpl implements MenuItemService{
 
         Truck truck = truckService.findTruckById(menuItem.getTruck().getTruckId());
         newMenuItem.setTruck(truck);
+
+        for(MenuItemPhoto mip : menuItem.getItemPhotos()){
+            newMenuItem.getItemPhotos().add(new MenuItemPhoto(newMenuItem, mip.getUrl()));
+        }
 
         double totalScore = 0;
 
