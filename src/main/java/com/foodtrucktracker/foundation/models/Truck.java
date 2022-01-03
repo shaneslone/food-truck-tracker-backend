@@ -33,6 +33,7 @@ public class Truck
 
     @ManyToOne
     @JoinColumn(name = "userid")
+    @JsonIgnoreProperties(value = {"roles", "currentLocation", "ownedTrucks", "favoriteTrucks", "truckReviews", "menuItemReviews"})
     private User operator;
 
     @OneToMany(mappedBy = "truck",
