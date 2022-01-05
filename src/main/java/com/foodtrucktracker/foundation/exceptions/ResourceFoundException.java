@@ -8,6 +8,6 @@ public class ResourceFoundException
 {
     public ResourceFoundException(String message)
     {
-        super("Error from a BloomTech Application " + message);
+        super("Error from Food Truck Tracker " + message);
     }
 }

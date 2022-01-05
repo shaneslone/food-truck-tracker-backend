@@ -33,7 +33,7 @@ public class Truck
 
     @ManyToOne
     @JoinColumn(name = "userid")
-    @JsonIgnoreProperties(value = {"roles", "currentLocation", "ownedTrucks", "favoriteTrucks", "truckReviews", "menuItemReviews"})
+    @JsonIgnoreProperties(value = {"roles", "currentLocation", "ownedTrucks", "favoriteTrucks", "truckReviews", "menuItemReviews", "email"})
     private User operator;
 
     @OneToMany(mappedBy = "truck",

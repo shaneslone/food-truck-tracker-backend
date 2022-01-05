@@ -14,7 +14,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/menuitem")
+@RequestMapping("/menuitems")
 public class MenuItemController {
     @Autowired
     private MenuItemService menuItemService;
@@ -31,7 +31,7 @@ public class MenuItemController {
         return new ResponseEntity<>(menuItem, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/truck", consumes = "application/json")
+    @PostMapping(value = "/menuitem", consumes = "application/json")
     public ResponseEntity<?> addMenuItem(@Valid @RequestBody MenuItem newMenuItem){
         newMenuItem.setMenuId(0);
         newMenuItem = menuItemService.save(newMenuItem);

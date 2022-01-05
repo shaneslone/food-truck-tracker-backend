@@ -12,7 +12,7 @@ public class DinerTrucks extends Auditable implements Serializable {
     @Id
     @ManyToOne
     @JoinColumn(name = "userid")
-    @JsonIgnoreProperties(value = "favoriteTrucks", allowSetters = true)
+    @JsonIgnoreProperties(value = {"truckReviews", "ownedTrucks", "roles", "email", "currentLocation", "favoriteTrucks", "menuItemReviews"}, allowSetters = true)
     private User diner;
 
     @Id

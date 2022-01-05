@@ -64,6 +64,7 @@ public class ResourceServerConfig
             .hasAnyRole("ADMIN")
             .antMatchers("/users/**",
                 "/trucks/**",
+                "/menuitems/**",
                 "/oauth/revoke-token",
                 "/logout")
             .authenticated()
