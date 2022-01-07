@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -32,6 +33,7 @@ public class TruckController {
         return new ResponseEntity<>(truck, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR')")
     @PostMapping(value = "/truck", consumes = "application/json")
     public ResponseEntity<?> addTruck(@Valid @RequestBody Truck newTruck){
         newTruck.setTruckId(0);
@@ -46,6 +48,7 @@ public class TruckController {
         return new ResponseEntity<>(newTruck, responseHeaders, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR')")
     @PutMapping(value = "/truck/{truckId}", consumes = "application/json")
     public ResponseEntity<?> updateTruck(@Valid @RequestBody Truck updateTruck, @PathVariable long truckId){
         updateTruck.setTruckId(truckId);
@@ -54,6 +57,7 @@ public class TruckController {
         return new ResponseEntity<>(updateTruck, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR')")
     @DeleteMapping(value = "/truck/{truckId}")
     public ResponseEntity<?> deleteUserById(@PathVariable long truckId){
         truckService.delete(truckId);

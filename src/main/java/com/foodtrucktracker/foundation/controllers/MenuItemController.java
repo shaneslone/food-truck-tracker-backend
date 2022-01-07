@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -31,6 +32,7 @@ public class MenuItemController {
         return new ResponseEntity<>(menuItem, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR')")
     @PostMapping(value = "/menuitem", consumes = "application/json")
     public ResponseEntity<?> addMenuItem(@Valid @RequestBody MenuItem newMenuItem){
         newMenuItem.setMenuId(0);
@@ -45,6 +47,7 @@ public class MenuItemController {
         return new ResponseEntity<>(newMenuItem, responseHeaders, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR')")
     @PutMapping(value = "/menuitem/{menuItemId}", consumes = "application/json")
     public ResponseEntity<?> updateMenuItem(@Valid @RequestBody MenuItem updateMenuItem, @PathVariable long menuItemId){
         updateMenuItem.setMenuId(menuItemId);
@@ -53,6 +56,7 @@ public class MenuItemController {
         return new ResponseEntity<>(updateMenuItem, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR')")
     @DeleteMapping(value = "/menuitem/{menuItemId}")
     public ResponseEntity<?> deleteMenuItemById(@PathVariable long menuItemId){
         menuItemService.delete(menuItemId);

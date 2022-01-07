@@ -1,6 +1,5 @@
 package com.foodtrucktracker.foundation;
 
-import com.foodtrucktracker.foundation.constants.RoleValues;
 import com.foodtrucktracker.foundation.models.*;
 import com.foodtrucktracker.foundation.services.MenuItemService;
 import com.foodtrucktracker.foundation.services.RoleService;
@@ -89,10 +88,6 @@ public class SeedData
         u1.getRoles()
             .add(new UserRoles(u1,
                 r2));
-        u1.getRoles()
-            .add(new UserRoles(u1,
-                r3));
-
         u1 = userService.save(u1);
 
         // data, user
@@ -100,9 +95,6 @@ public class SeedData
             "1234567",
             "cinnamon@lambdaschool.local",
                 "12345678,12345678");
-        u2.getRoles()
-            .add(new UserRoles(u2,
-                r2));
         u2.getRoles()
             .add(new UserRoles(u2,
                 r3));
@@ -160,10 +152,10 @@ public class SeedData
                 1.99);
         m1.getItemPhotos().add(new MenuItemPhoto(m1, "http://test.com/image.png"));
         m1 = menuItemService.save(m1);
-        m1.getCustomerRatings().add(new MenuItemReview(u1, m1, 5));
+        m1.getCustomerRatings().add(new MenuItemReview(u3, m1, 5));
         menuItemService.save(m1);
 
-        u1.getFavoriteTrucks().add(new DinerTrucks(u1, t2));
+        u1.getFavoriteTrucks().add(new DinerTrucks(u3, t2));
         u1 = userService.save(u1);
 
         if (false)
