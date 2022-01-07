@@ -23,6 +23,9 @@ public class MenuItemServiceImpl implements MenuItemService{
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private HelperFunctions helperFunctions;
+
     @Override
     public List<MenuItem> findAll() {
         List<MenuItem> list = new ArrayList<>();
@@ -38,7 +41,8 @@ public class MenuItemServiceImpl implements MenuItemService{
 
     @Override
     public void delete(long id) {
-        findMenuItemById(id);
+        MenuItem menuItem =  findMenuItemById(id);
+        helperFunctions.isAuthorizedToMakeChange(menuItem.getTruck().getOperator().getUsername());
         menuItemRepository.deleteById(id);
     }
 
@@ -47,7 +51,8 @@ public class MenuItemServiceImpl implements MenuItemService{
         MenuItem newMenuItem = new MenuItem();
 
         if(menuItem.getMenuId() != 0){
-            findMenuItemById(menuItem.getMenuId());
+            MenuItem currentMenuItem = findMenuItemById(menuItem.getMenuId());
+            helperFunctions.isAuthorizedToMakeChange(currentMenuItem.getTruck().getOperator().getUsername());
             newMenuItem.setMenuId(menuItem.getMenuId());
         }
 

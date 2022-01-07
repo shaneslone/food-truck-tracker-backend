@@ -22,6 +22,9 @@ public class TruckServiceImpl  implements TruckService{
     @Autowired
     private MenuItemService menuItemService;
 
+    @Autowired
+    private HelperFunctions helperFunctions;
+
     @Override
     public List<Truck> findAll() {
         List<Truck> list = new ArrayList<>();
@@ -37,7 +40,8 @@ public class TruckServiceImpl  implements TruckService{
 
     @Override
     public void delete(long id) {
-        findTruckById(id);
+        Truck truck = findTruckById(id);
+        helperFunctions.isAuthorizedToMakeChange(truck.getOperator().getUsername());
         truckRepository.deleteById(id);
     }
 
@@ -46,7 +50,8 @@ public class TruckServiceImpl  implements TruckService{
         Truck newTruck = new Truck();
 
         if(truck.getTruckId() != 0){
-            findTruckById(truck.getTruckId());
+            Truck currentTruck = findTruckById(truck.getTruckId());
+            helperFunctions.isAuthorizedToMakeChange(currentTruck.getOperator().getUsername());
             newTruck.setTruckId(truck.getTruckId());
         }
 

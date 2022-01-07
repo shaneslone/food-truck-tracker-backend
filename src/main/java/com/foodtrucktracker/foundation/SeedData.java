@@ -125,7 +125,7 @@ public class SeedData
                 "12345678,12345678");
         u5.getRoles()
             .add(new UserRoles(u5,
-                r2));
+                r3));
         u5 = userService.save(u5);
 
         Truck t1 = new Truck("Pink Taco",
@@ -151,9 +151,8 @@ public class SeedData
                 "It's a crunchy taco!",
                 1.99);
         m1.getItemPhotos().add(new MenuItemPhoto(m1, "http://test.com/image.png"));
-        m1 = menuItemService.save(m1);
         m1.getCustomerRatings().add(new MenuItemReview(u3, m1, 5));
-        menuItemService.save(m1);
+        m1 = menuItemService.save(m1);
 
         u1.getFavoriteTrucks().add(new DinerTrucks(u3, t2));
         u1 = userService.save(u1);
