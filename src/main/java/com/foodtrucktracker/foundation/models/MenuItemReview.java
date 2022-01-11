@@ -10,7 +10,6 @@ import java.io.Serializable;
 @Entity
 @Table(name = "menuitemreviews")
 @IdClass(MenuItemReviewId.class)
-@JsonIgnoreProperties(value = "menuItem")
 public class MenuItemReview extends Auditable implements Serializable {
     @Id
     @ManyToOne
@@ -20,7 +19,8 @@ public class MenuItemReview extends Auditable implements Serializable {
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "menuItemId")
+    @JoinColumn(name = "menuId")
+    @JsonIgnoreProperties(value = {"itemDescription", "itemPrice", "itemPhotos", "customerRatings", "customerRatingsAvg", "truck"}, allowSetters = true)
     private MenuItem menuItem;
 
     @Min(value = 0)
