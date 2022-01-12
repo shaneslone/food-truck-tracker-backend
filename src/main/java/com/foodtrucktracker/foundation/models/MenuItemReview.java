@@ -14,13 +14,13 @@ public class MenuItemReview extends Auditable implements Serializable {
     @Id
     @ManyToOne
     @JoinColumn(name = "userid")
-    @JsonIgnoreProperties(value = {"truckReviews", "ownedTrucks", "roles", "email", "currentLocation", "favoriteTrucks", "menuItemReviews"}, allowSetters = true)
+    @JsonIgnoreProperties(value = {"username", "truckReviews", "ownedTrucks", "roles", "email", "currentLocation", "favoriteTrucks", "menuItemReviews"}, allowSetters = true)
     private User diner;
 
     @Id
     @ManyToOne
     @JoinColumn(name = "menuId")
-    @JsonIgnoreProperties(value = {"itemDescription", "itemPrice", "itemPhotos", "customerRatings", "customerRatingsAvg", "truck"}, allowSetters = true)
+    @JsonIgnoreProperties(value = {"itemName", "itemDescription", "itemPrice", "itemPhotos", "customerRatings", "customerRatingsAvg", "truck"}, allowSetters = true)
     private MenuItem menuItem;
 
     @Min(value = 0)
