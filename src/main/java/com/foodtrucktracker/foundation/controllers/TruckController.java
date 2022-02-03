@@ -1,12 +1,15 @@
 package com.foodtrucktracker.foundation.controllers;
 
 import com.foodtrucktracker.foundation.models.Truck;
+import com.foodtrucktracker.foundation.models.User;
 import com.foodtrucktracker.foundation.services.TruckService;
+import com.foodtrucktracker.foundation.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -20,6 +23,9 @@ public class TruckController {
 
     @Autowired
     private TruckService truckService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping(value = "/trucks", produces = "application/json")
     public ResponseEntity<?> listAllTrucks(){
@@ -35,8 +41,10 @@ public class TruckController {
 
     @PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR')")
     @PostMapping(value = "/truck", consumes = "application/json")
-    public ResponseEntity<?> addTruck(@Valid @RequestBody Truck newTruck){
+    public ResponseEntity<?> addTruck(@Valid @RequestBody Truck newTruck, Authentication authentication){
+        User currentUser = userService.findByName(authentication.getName());
         newTruck.setTruckId(0);
+        newTruck.setOperator(currentUser);
         newTruck = truckService.save(newTruck);
 
         HttpHeaders responseHeaders = new HttpHeaders();

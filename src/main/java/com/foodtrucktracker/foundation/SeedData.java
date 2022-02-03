@@ -81,7 +81,7 @@ public class SeedData
         User u1 = new User("admin",
             "password",
             "admin@lambdaschool.local",
-                "12345678,12345678");
+                "43.6034958,-110.7363361");
         u1.getRoles()
             .add(new UserRoles(u1,
                 r1));
@@ -94,7 +94,7 @@ public class SeedData
         User u2 = new User("cinnamon",
             "1234567",
             "cinnamon@lambdaschool.local",
-                "12345678,12345678");
+                "43.6034958,-110.7363361");
         u2.getRoles()
             .add(new UserRoles(u2,
                 r3));
@@ -104,7 +104,7 @@ public class SeedData
         User u3 = new User("barnbarn",
             "ILuvM4th!",
             "barnbarn@lambdaschool.local",
-                "12345678,12345678");
+                "43.6034958,-110.7363361");
         u3.getRoles()
             .add(new UserRoles(u3,
                 r2));
@@ -113,7 +113,7 @@ public class SeedData
         User u4 = new User("puttat",
             "password",
             "puttat@school.lambda",
-                "12345678,12345678");
+                "43.6034958,-110.7363361");
         u4.getRoles()
             .add(new UserRoles(u4,
                 r2));
@@ -122,26 +122,26 @@ public class SeedData
         User u5 = new User("misskitty",
             "password",
             "misskitty@school.lambda",
-                "12345678,12345678");
+                "43.6034958,-110.7363361");
         u5.getRoles()
             .add(new UserRoles(u5,
                 r3));
         u5 = userService.save(u5);
 
         Truck t1 = new Truck("Pink Taco",
-                null,
+                "https://pinktaco.com/wp-content/uploads/2020/07/pink-taco-truck-ca.jpg",
                 "Mexican",
-                "12345678,12345678",
+                "44.6034958,-110.7363361",
                 new Date(),
                 u1);
         t1.getReviews().add(new DinerTruckReview(u1, t1, 5));
         t1.getReviews().add(new DinerTruckReview(u2, t1, 4));
         t1 = truckService.save(t1);
 
-        Truck t2 = new Truck("Bruno's Pizza",
-                null,
+        Truck t2 = new Truck("Sal's Pizza",
+                "https://2bwrl244x46j3rrorox6yc6b-wpengine.netdna-ssl.com/wp-content/uploads/2020/08/thumbnail_Sals_Mobile_024.jpg",
                 "Pizza",
-                "12345678,12345678",
+                "43.6034958,-112.7363361",
                 new Date(),
                 u2);
         t2 = truckService.save(t2);
@@ -150,7 +150,7 @@ public class SeedData
                 "Taco",
                 "It's a crunchy taco!",
                 1.99);
-        m1.getItemPhotos().add(new MenuItemPhoto(m1, "http://test.com/image.png"));
+        m1.getItemPhotos().add(new MenuItemPhoto(m1, "https://www.tacobell.com/_static/web/images/loyalty/side-overlay-2022-E01-Rewards-Doritos-Locos-Tacos-W.png"));
         m1.getCustomerRatings().add(new MenuItemReview(u3, m1, 5));
         m1 = menuItemService.save(m1);
 
