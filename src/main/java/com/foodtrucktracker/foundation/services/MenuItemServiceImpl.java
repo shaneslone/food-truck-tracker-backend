@@ -54,6 +54,8 @@ public class MenuItemServiceImpl implements MenuItemService{
             MenuItem currentMenuItem = findMenuItemById(menuItem.getMenuId());
             helperFunctions.isAuthorizedToMakeChange(currentMenuItem.getTruck().getOperator().getUsername());
             newMenuItem.setMenuId(menuItem.getMenuId());
+        } else {
+            helperFunctions.isAuthorizedToMakeChange(menuItem.getTruck().getOperator().getUsername());
         }
 
         newMenuItem.setItemName(menuItem.getItemName());

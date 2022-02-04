@@ -1,7 +1,9 @@
 package com.foodtrucktracker.foundation.controllers;
 
 import com.foodtrucktracker.foundation.models.MenuItem;
+import com.foodtrucktracker.foundation.models.Truck;
 import com.foodtrucktracker.foundation.services.MenuItemService;
+import com.foodtrucktracker.foundation.services.TruckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,9 @@ public class MenuItemController {
     @Autowired
     private MenuItemService menuItemService;
 
+    @Autowired
+    private TruckService truckService;
+
     @GetMapping(value = "/menuitems", produces = "application/json")
     public ResponseEntity<?> listAllMenuItems(){
         List<MenuItem> menuItems = menuItemService.findAll();
@@ -33,9 +38,11 @@ public class MenuItemController {
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR')")
-    @PostMapping(value = "/menuitem", consumes = "application/json")
-    public ResponseEntity<?> addMenuItem(@Valid @RequestBody MenuItem newMenuItem){
+    @PostMapping(value = "/menuitem/truck/{truckId}", consumes = "application/json")
+    public ResponseEntity<?> addMenuItem(@Valid @RequestBody MenuItem newMenuItem, @PathVariable long truckId){
+        Truck truck = truckService.findTruckById(truckId);
         newMenuItem.setMenuId(0);
+        newMenuItem.setTruck(truck);
         newMenuItem = menuItemService.save(newMenuItem);
 
         HttpHeaders responseHeaders = new HttpHeaders();
