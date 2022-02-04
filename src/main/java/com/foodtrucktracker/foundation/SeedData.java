@@ -1,6 +1,7 @@
 package com.foodtrucktracker.foundation;
 
 import com.foodtrucktracker.foundation.models.*;
+import com.foodtrucktracker.foundation.repository.MenuItemRepository;
 import com.foodtrucktracker.foundation.services.MenuItemService;
 import com.foodtrucktracker.foundation.services.RoleService;
 import com.foodtrucktracker.foundation.services.TruckService;
@@ -51,7 +52,7 @@ public class SeedData
     TruckService truckService;
 
     @Autowired
-    MenuItemService menuItemService;
+    MenuItemRepository menuItemRepository;
 
     /**
      * Generates test, seed data for our application
@@ -152,7 +153,7 @@ public class SeedData
                 1.99);
         m1.getItemPhotos().add(new MenuItemPhoto(m1, "https://www.tacobell.com/_static/web/images/loyalty/side-overlay-2022-E01-Rewards-Doritos-Locos-Tacos-W.png"));
         m1.getCustomerRatings().add(new MenuItemReview(u3, m1, 5));
-        m1 = menuItemService.save(m1);
+        m1 = menuItemRepository.save(m1);
 
         u1.getFavoriteTrucks().add(new DinerTrucks(u3, t2));
         u1 = userService.save(u1);
