@@ -71,4 +71,10 @@ public class TruckController {
         truckService.delete(truckId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping(value = "/trucks/cuisinetype/{cuisinetype}")
+    public ResponseEntity<?>listTrucksByCuisineType(@PathVariable String cuisinetype){
+        List<Truck> trucks = truckService.findByCuisineType(cuisinetype);
+        return new ResponseEntity<>(trucks, HttpStatus.OK);
+    }
 }

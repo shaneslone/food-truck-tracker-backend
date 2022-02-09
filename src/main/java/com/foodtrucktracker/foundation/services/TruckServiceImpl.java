@@ -94,4 +94,9 @@ public class TruckServiceImpl  implements TruckService{
     public void deleteAll() {
         truckRepository.deleteAll();
     }
+
+    @Override
+    public List<Truck> findByCuisineType(String cuisineType) {
+        return truckRepository.findByCuisineTypeContainingIgnoreCase(cuisineType);
+    }
 }

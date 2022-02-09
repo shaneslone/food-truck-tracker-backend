@@ -10,4 +10,5 @@ public interface TruckService {
     void delete (long id);
     Truck save(Truck truck);
     void deleteAll();
+    List<Truck> findByCuisineType(String cuisineType);
 }
