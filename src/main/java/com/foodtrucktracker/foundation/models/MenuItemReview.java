@@ -25,12 +25,12 @@ public class MenuItemReview extends Auditable implements Serializable {
 
     @Min(value = 0)
     @Max(value = 5)
-    private int score;
+    private double score;
 
     public MenuItemReview() {
     }
 
-    public MenuItemReview(User diner, MenuItem menuItem, int score) {
+    public MenuItemReview(User diner, MenuItem menuItem, double score) {
         this.diner = diner;
         this.menuItem = menuItem;
         this.score = score;
@@ -52,11 +52,11 @@ public class MenuItemReview extends Auditable implements Serializable {
         this.menuItem = menuItem;
     }
 
-    public int getScore() {
+    public double getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(double score) {
         this.score = score;
     }
 }

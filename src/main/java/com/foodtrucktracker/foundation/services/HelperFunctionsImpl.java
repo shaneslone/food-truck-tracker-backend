@@ -93,4 +93,9 @@ public class HelperFunctionsImpl
             throw new OAuth2AccessDeniedException();
         }
     }
+
+    @Override
+    public double roundTwoDecimalPlaces(double number) {
+        return Math.round(number*100.0)/100.0;
+    }
 }

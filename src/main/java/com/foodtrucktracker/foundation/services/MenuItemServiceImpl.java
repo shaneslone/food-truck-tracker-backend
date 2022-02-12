@@ -78,7 +78,7 @@ public class MenuItemServiceImpl implements MenuItemService{
             newMenuItem.getCustomerRatings().add(new MenuItemReview(diner, newMenuItem, mir.getScore()));
         }
 
-        newMenuItem.setCustomerRatingsAvg(totalScore / newMenuItem.getCustomerRatings().size());
+        newMenuItem.setCustomerRatingsAvg(helperFunctions.roundTwoDecimalPlaces(totalScore / newMenuItem.getCustomerRatings().size()));
 
         return menuItemRepository.save(newMenuItem);
     }
