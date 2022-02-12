@@ -85,7 +85,7 @@ public class TruckServiceImpl  implements TruckService{
                     .add(new DinerTruckReview(user, newTruck, dtr.getScore()));
         }
 
-        newTruck.setCustomerRatingsAvg(reviewTotal > 0 ? reviewTotal / newTruck.getReviews().size() : 0);
+        newTruck.setCustomerRatingsAvg(reviewTotal / newTruck.getReviews().size());
 
         return truckRepository.save(newTruck);
     }
@@ -98,5 +98,10 @@ public class TruckServiceImpl  implements TruckService{
     @Override
     public List<Truck> findByCuisineType(String cuisineType) {
         return truckRepository.findByCuisineTypeContainingIgnoreCase(cuisineType);
+    }
+
+    @Override
+    public List<Truck> findByCustomerRatingAvg(double score) {
+        return truckRepository.findByCustomerRatingsAvgGreaterThan(score);
     }
 }

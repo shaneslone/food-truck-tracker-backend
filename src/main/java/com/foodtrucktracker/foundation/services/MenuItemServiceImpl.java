@@ -54,9 +54,10 @@ public class MenuItemServiceImpl implements MenuItemService{
             MenuItem currentMenuItem = findMenuItemById(menuItem.getMenuId());
             helperFunctions.isAuthorizedToMakeChange(currentMenuItem.getTruck().getOperator().getUsername());
             newMenuItem.setMenuId(menuItem.getMenuId());
-        } else {
-            helperFunctions.isAuthorizedToMakeChange(menuItem.getTruck().getOperator().getUsername());
         }
+//        else {
+//            helperFunctions.isAuthorizedToMakeChange(menuItem.getTruck().getOperator().getUsername());
+//        }
 
         newMenuItem.setItemName(menuItem.getItemName());
         newMenuItem.setItemPrice(menuItem.getItemPrice());
@@ -77,7 +78,7 @@ public class MenuItemServiceImpl implements MenuItemService{
             newMenuItem.getCustomerRatings().add(new MenuItemReview(diner, newMenuItem, mir.getScore()));
         }
 
-        newMenuItem.setCustomerRatingsAvg(totalScore > 0 ? totalScore / newMenuItem.getCustomerRatings().size() : 0);
+        newMenuItem.setCustomerRatingsAvg(totalScore / newMenuItem.getCustomerRatings().size());
 
         return menuItemRepository.save(newMenuItem);
     }

@@ -77,4 +77,10 @@ public class TruckController {
         List<Truck> trucks = truckService.findByCuisineType(cuisinetype);
         return new ResponseEntity<>(trucks, HttpStatus.OK);
     }
+
+    @GetMapping(value ="/trucks/rating/{score}")
+    public ResponseEntity<?>listTrucksByRating(@PathVariable double score){
+        List<Truck> trucks = truckService.findByCustomerRatingAvg(score);
+        return new ResponseEntity<>(trucks, HttpStatus.OK);
+    }
 }
