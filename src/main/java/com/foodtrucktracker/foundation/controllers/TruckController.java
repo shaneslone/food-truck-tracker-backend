@@ -1,5 +1,6 @@
 package com.foodtrucktracker.foundation.controllers;
 
+import com.foodtrucktracker.foundation.models.DinerTruckReview;
 import com.foodtrucktracker.foundation.models.Truck;
 import com.foodtrucktracker.foundation.models.User;
 import com.foodtrucktracker.foundation.services.TruckService;
@@ -83,4 +84,27 @@ public class TruckController {
         List<Truck> trucks = truckService.findByCustomerRatingAvg(score);
         return new ResponseEntity<>(trucks, HttpStatus.OK);
     }
+
+    @PostMapping(value = "/truck/{truckid}/rating/{rating}")
+    public ResponseEntity<?> addTruckReview(@PathVariable long truckid, @PathVariable double rating, Authentication authentication){
+        User user = userService.findByName(authentication.getName());
+        Truck truck = truckService.findTruckById(truckid);
+        truck.getReviews().add(new DinerTruckReview(user, truck, rating));
+        truck = truckService.save(truck);
+        return new ResponseEntity<>(truck, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/truck/{truckid}/rating/{rating}")
+    public ResponseEntity<?> updateTruckReview(@PathVariable long truckid, @PathVariable double rating, Authentication authentication){
+        User user = userService.findByName(authentication.getName());
+        Truck truck = truckService.findTruckById(truckid);
+        truck.getReviews().forEach(review -> {
+            if(review.getDiner().getUserid() == user.getUserid()){
+                review.setScore(rating);
+            }
+        });
+        truck = truckService.save(truck);
+        return new ResponseEntity<>(truck, HttpStatus.OK);
+    }
+
 }

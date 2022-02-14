@@ -25,12 +25,12 @@ public class DinerTruckReview extends Auditable implements Serializable {
 
     @Min(value = 0)
     @Max(value = 5)
-    private int score;
+    private double score;
 
     public DinerTruckReview() {
     }
 
-    public DinerTruckReview(User diner, Truck truck, int score) {
+    public DinerTruckReview(User diner, Truck truck, double score) {
         this.diner = diner;
         this.truck = truck;
         this.score = score;
@@ -52,11 +52,11 @@ public class DinerTruckReview extends Auditable implements Serializable {
         this.truck = truck;
     }
 
-    public int getScore() {
+    public double getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(double score) {
         this.score = score;
     }
 }

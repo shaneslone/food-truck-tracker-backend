@@ -19,6 +19,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/menuitems")
@@ -82,6 +84,19 @@ public class MenuItemController {
         User user = userService.findByName(authentication.getName());
         MenuItem menuItem = menuItemService.findMenuItemById(menuItemId);
         menuItem.getCustomerRatings().add(new MenuItemReview(user, menuItem, rating));
+        menuItem= menuItemService.save(menuItem);
+        return new ResponseEntity<>(menuItem, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/menuitem/{menuItemId}/rating/{rating}")
+    public ResponseEntity<?> updateCustomerRating(@PathVariable long menuItemId, @PathVariable double rating, Authentication authentication){
+        User user = userService.findByName(authentication.getName());
+        MenuItem menuItem = menuItemService.findMenuItemById(menuItemId);
+        menuItem.getCustomerRatings().forEach(review -> {
+            if(review.getDiner().getUserid() == user.getUserid()){
+                review.setScore(rating);
+            }
+        });
         menuItem= menuItemService.save(menuItem);
         return new ResponseEntity<>(menuItem, HttpStatus.OK);
     }
