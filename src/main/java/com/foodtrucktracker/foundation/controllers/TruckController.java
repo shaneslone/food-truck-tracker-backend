@@ -1,8 +1,7 @@
 package com.foodtrucktracker.foundation.controllers;
 
-import com.foodtrucktracker.foundation.models.DinerTruckReview;
-import com.foodtrucktracker.foundation.models.Truck;
-import com.foodtrucktracker.foundation.models.User;
+import com.foodtrucktracker.foundation.models.*;
+import com.foodtrucktracker.foundation.services.DinerTrucksService;
 import com.foodtrucktracker.foundation.services.TruckService;
 import com.foodtrucktracker.foundation.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +26,9 @@ public class TruckController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private DinerTrucksService dinerTrucksService;
 
     @GetMapping(value = "/trucks", produces = "application/json")
     public ResponseEntity<?> listAllTrucks(){
@@ -105,6 +107,22 @@ public class TruckController {
         });
         truck = truckService.save(truck);
         return new ResponseEntity<>(truck, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/truck/{truckid}/favorite")
+    public ResponseEntity<?> addFavorite(@PathVariable long truckid, Authentication authentication){
+        User user = userService.findByName(authentication.getName());
+        Truck truck = truckService.findTruckById(truckid);
+        DinerTrucks favorite = dinerTrucksService.save(new DinerTrucks(user, truck));
+        return new ResponseEntity<>(favorite, HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/truck/{truckid}/favorite")
+    public ResponseEntity<?> deleteFavorite(@PathVariable long truckid, Authentication authentication){
+        User user = userService.findByName(authentication.getName());
+        Truck truck = truckService.findTruckById(truckid);
+        dinerTrucksService.delete(new DinerTruckId(user.getUserid(), truck.getTruckId()));
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

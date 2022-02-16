@@ -11,6 +11,11 @@ public class DinerTruckId implements Serializable {
     public DinerTruckId() {
     }
 
+    public DinerTruckId(long diner, long truck) {
+        this.diner = diner;
+        this.truck = truck;
+    }
+
     public long getDiner() {
         return diner;
     }
