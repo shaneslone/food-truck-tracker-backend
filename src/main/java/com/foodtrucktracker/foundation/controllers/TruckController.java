@@ -15,6 +15,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -123,6 +124,25 @@ public class TruckController {
         Truck truck = truckService.findTruckById(truckid);
         dinerTrucksService.delete(new DinerTruckId(user.getUserid(), truck.getTruckId()));
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/truck/{truckid}/location/{location}")
+    public ResponseEntity<?> updateLocation(@PathVariable long truckid, @PathVariable String location){
+        Truck truck = truckService.findTruckById(truckid);
+        truck.setCurrentLocation(location);
+        truck = truckService.save(truck);
+        return new ResponseEntity<>(truck, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/truck/{truckid}/departuretime/{departuretime}")
+    public ResponseEntity<?> updateDepartureTime(@PathVariable long truckid, @PathVariable long departuretime){
+        Truck truck = truckService.findTruckById(truckid);
+        System.out.println(departuretime);
+        Date date = new Date();
+        System.out.println(date);
+        truck.setDepartureTime(date);
+        truck = truckService.save(truck);
+        return new ResponseEntity<>(truck, HttpStatus.OK);
     }
 
 }
