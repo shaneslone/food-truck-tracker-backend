@@ -31,17 +31,19 @@ public class DinerTrucksServiceImpl implements DinerTrucksService{
     }
 
     @Override
-    public DinerTrucks save(DinerTrucks dinerTrucks) {
+    public User save(DinerTrucks dinerTrucks) {
         User user = userService.findUserById(dinerTrucks.getDiner().getUserid());
         helperFunctions.isAuthorizedToMakeChange(user.getUsername());
         truckService.findTruckById(dinerTrucks.getTruck().getTruckId());
-        return dinerTrucksRepository.save(dinerTrucks);
+        DinerTrucks review = dinerTrucksRepository.save(dinerTrucks);
+        return review.getDiner();
     }
 
     @Override
-    public void delete(DinerTruckId id) {
+    public User delete(DinerTruckId id) {
         DinerTrucks dinerTrucks = findDinerTrucksById(id);
         helperFunctions.isAuthorizedToMakeChange(dinerTrucks.getDiner().getUsername());
         dinerTrucksRepository.deleteById(id);
+        return userService.findUserById(dinerTrucks.getDiner().getUserid());
     }
 }

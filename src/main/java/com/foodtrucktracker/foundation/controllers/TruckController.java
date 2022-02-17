@@ -110,22 +110,6 @@ public class TruckController {
         return new ResponseEntity<>(truck, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/truck/{truckid}/favorite")
-    public ResponseEntity<?> addFavorite(@PathVariable long truckid, Authentication authentication){
-        User user = userService.findByName(authentication.getName());
-        Truck truck = truckService.findTruckById(truckid);
-        DinerTrucks favorite = dinerTrucksService.save(new DinerTrucks(user, truck));
-        return new ResponseEntity<>(favorite, HttpStatus.OK);
-    }
-
-    @DeleteMapping(value = "/truck/{truckid}/favorite")
-    public ResponseEntity<?> deleteFavorite(@PathVariable long truckid, Authentication authentication){
-        User user = userService.findByName(authentication.getName());
-        Truck truck = truckService.findTruckById(truckid);
-        dinerTrucksService.delete(new DinerTruckId(user.getUserid(), truck.getTruckId()));
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
     @PutMapping(value = "/truck/{truckid}/location/{location}")
     public ResponseEntity<?> updateLocation(@PathVariable long truckid, @PathVariable String location){
         Truck truck = truckService.findTruckById(truckid);
@@ -137,10 +121,7 @@ public class TruckController {
     @PutMapping(value = "/truck/{truckid}/departuretime/{departuretime}")
     public ResponseEntity<?> updateDepartureTime(@PathVariable long truckid, @PathVariable long departuretime){
         Truck truck = truckService.findTruckById(truckid);
-        System.out.println(departuretime);
-        Date date = new Date();
-        System.out.println(date);
-        truck.setDepartureTime(date);
+        truck.setDepartureTime(new Date(departuretime));
         truck = truckService.save(truck);
         return new ResponseEntity<>(truck, HttpStatus.OK);
     }

@@ -1,6 +1,11 @@
 package com.foodtrucktracker.foundation.controllers;
 
+import com.foodtrucktracker.foundation.models.DinerTruckId;
+import com.foodtrucktracker.foundation.models.DinerTrucks;
+import com.foodtrucktracker.foundation.models.Truck;
 import com.foodtrucktracker.foundation.models.User;
+import com.foodtrucktracker.foundation.services.DinerTrucksService;
+import com.foodtrucktracker.foundation.services.TruckService;
 import com.foodtrucktracker.foundation.services.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +34,12 @@ public class UserController
      */
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private TruckService truckService;
+
+    @Autowired
+    private DinerTrucksService dinerTrucksService;
 
     /**
      * Returns a list of all users
@@ -206,6 +217,24 @@ public class UserController
     {
         userService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'DINER')")
+    @PostMapping(value = "/user/favorite/truck/{truckid}")
+    public ResponseEntity<?> addFavorite(@PathVariable long truckid, Authentication authentication){
+        User user = userService.findByName(authentication.getName());
+        Truck truck = truckService.findTruckById(truckid);
+        user = dinerTrucksService.save(new DinerTrucks(user, truck));
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'DINER')")
+    @DeleteMapping(value = "/user/favorite/truck/{truckid}")
+    public ResponseEntity<?> deleteFavorite(@PathVariable long truckid, Authentication authentication){
+        User user = userService.findByName(authentication.getName());
+        Truck truck = truckService.findTruckById(truckid);
+        user = dinerTrucksService.delete(new DinerTruckId(user.getUserid(), truck.getTruckId()));
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     /**
