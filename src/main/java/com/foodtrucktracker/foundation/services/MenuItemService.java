@@ -10,4 +10,5 @@ public interface MenuItemService {
     void delete(long id);
     MenuItem save (MenuItem menuItem);
     void deleteAll();
+    MenuItem updateReviewAvg(long id);
 }

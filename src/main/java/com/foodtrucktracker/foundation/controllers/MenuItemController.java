@@ -4,6 +4,7 @@ import com.foodtrucktracker.foundation.models.MenuItem;
 import com.foodtrucktracker.foundation.models.MenuItemReview;
 import com.foodtrucktracker.foundation.models.Truck;
 import com.foodtrucktracker.foundation.models.User;
+import com.foodtrucktracker.foundation.services.MenuItemReviewService;
 import com.foodtrucktracker.foundation.services.MenuItemService;
 import com.foodtrucktracker.foundation.services.TruckService;
 import com.foodtrucktracker.foundation.services.UserService;
@@ -19,8 +20,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/menuitems")
@@ -33,6 +32,9 @@ public class MenuItemController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private MenuItemReviewService menuItemReviewService;
 
     @GetMapping(value = "/menuitems", produces = "application/json")
     public ResponseEntity<?> listAllMenuItems(){
@@ -79,25 +81,12 @@ public class MenuItemController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'DINER')")
     @PostMapping(value = "/menuitem/{menuItemId}/rating/{rating}")
     public ResponseEntity<?> addCustomerRating(@PathVariable long menuItemId, @PathVariable double rating, Authentication authentication){
         User user = userService.findByName(authentication.getName());
         MenuItem menuItem = menuItemService.findMenuItemById(menuItemId);
-        menuItem.getCustomerRatings().add(new MenuItemReview(user, menuItem, rating));
-        menuItem= menuItemService.save(menuItem);
-        return new ResponseEntity<>(menuItem, HttpStatus.OK);
-    }
-
-    @PutMapping(value = "/menuitem/{menuItemId}/rating/{rating}")
-    public ResponseEntity<?> updateCustomerRating(@PathVariable long menuItemId, @PathVariable double rating, Authentication authentication){
-        User user = userService.findByName(authentication.getName());
-        MenuItem menuItem = menuItemService.findMenuItemById(menuItemId);
-        menuItem.getCustomerRatings().forEach(review -> {
-            if(review.getDiner().getUserid() == user.getUserid()){
-                review.setScore(rating);
-            }
-        });
-        menuItem= menuItemService.save(menuItem);
+        menuItem = menuItemReviewService.save(new MenuItemReview(user, menuItem, rating));
         return new ResponseEntity<>(menuItem, HttpStatus.OK);
     }
 }

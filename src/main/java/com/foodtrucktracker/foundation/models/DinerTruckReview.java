@@ -59,4 +59,11 @@ public class DinerTruckReview extends Auditable implements Serializable {
     public void setScore(double score) {
         this.score = score;
     }
+
+    @Override
+    public String toString() {
+        return "DinerTruckReview{" +
+                "score=" + score +
+                '}';
+    }
 }

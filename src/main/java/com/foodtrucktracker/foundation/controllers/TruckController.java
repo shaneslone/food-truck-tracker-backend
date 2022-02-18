@@ -1,6 +1,7 @@
 package com.foodtrucktracker.foundation.controllers;
 
 import com.foodtrucktracker.foundation.models.*;
+import com.foodtrucktracker.foundation.services.DinerTruckReviewService;
 import com.foodtrucktracker.foundation.services.DinerTrucksService;
 import com.foodtrucktracker.foundation.services.TruckService;
 import com.foodtrucktracker.foundation.services.UserService;
@@ -31,6 +32,9 @@ public class TruckController {
     @Autowired
     private DinerTrucksService dinerTrucksService;
 
+    @Autowired
+    private DinerTruckReviewService dinerTruckReviewService;
+
     @GetMapping(value = "/trucks", produces = "application/json")
     public ResponseEntity<?> listAllTrucks(){
         List<Truck> trucks = truckService.findAll();
@@ -40,6 +44,33 @@ public class TruckController {
     @GetMapping(value = "/truck/{truckId}", produces = "application/json")
     public ResponseEntity<?> getTruckById(@PathVariable long truckId){
         Truck truck = truckService.findTruckById(truckId);
+        return new ResponseEntity<>(truck, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'DINER')")
+    @PostMapping(value = "/truck/{truckid}/rating/{rating}")
+    public ResponseEntity<?> addTruckReview(@PathVariable long truckid, @PathVariable double rating, Authentication authentication){
+        User user = userService.findByName(authentication.getName());
+        Truck truck = truckService.findTruckById(truckid);
+        truck = dinerTruckReviewService.save(new DinerTruckReview(user, truck, rating));
+        return new ResponseEntity<>(truck, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR')")
+    @PutMapping(value = "/truck/{truckid}/location/{location}")
+    public ResponseEntity<?> updateLocation(@PathVariable long truckid, @PathVariable String location){
+        Truck truck = truckService.findTruckById(truckid);
+        truck.setCurrentLocation(location);
+        truck = truckService.save(truck);
+        return new ResponseEntity<>(truck, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR')")
+    @PutMapping(value = "/truck/{truckid}/departuretime/{departuretime}")
+    public ResponseEntity<?> updateDepartureTime(@PathVariable long truckid, @PathVariable long departuretime){
+        Truck truck = truckService.findTruckById(truckid);
+        truck.setDepartureTime(new Date(departuretime));
+        truck = truckService.save(truck);
         return new ResponseEntity<>(truck, HttpStatus.OK);
     }
 
@@ -87,43 +118,4 @@ public class TruckController {
         List<Truck> trucks = truckService.findByCustomerRatingAvg(score);
         return new ResponseEntity<>(trucks, HttpStatus.OK);
     }
-
-    @PostMapping(value = "/truck/{truckid}/rating/{rating}")
-    public ResponseEntity<?> addTruckReview(@PathVariable long truckid, @PathVariable double rating, Authentication authentication){
-        User user = userService.findByName(authentication.getName());
-        Truck truck = truckService.findTruckById(truckid);
-        truck.getReviews().add(new DinerTruckReview(user, truck, rating));
-        truck = truckService.save(truck);
-        return new ResponseEntity<>(truck, HttpStatus.OK);
-    }
-
-    @PutMapping(value = "/truck/{truckid}/rating/{rating}")
-    public ResponseEntity<?> updateTruckReview(@PathVariable long truckid, @PathVariable double rating, Authentication authentication){
-        User user = userService.findByName(authentication.getName());
-        Truck truck = truckService.findTruckById(truckid);
-        truck.getReviews().forEach(review -> {
-            if(review.getDiner().getUserid() == user.getUserid()){
-                review.setScore(rating);
-            }
-        });
-        truck = truckService.save(truck);
-        return new ResponseEntity<>(truck, HttpStatus.OK);
-    }
-
-    @PutMapping(value = "/truck/{truckid}/location/{location}")
-    public ResponseEntity<?> updateLocation(@PathVariable long truckid, @PathVariable String location){
-        Truck truck = truckService.findTruckById(truckid);
-        truck.setCurrentLocation(location);
-        truck = truckService.save(truck);
-        return new ResponseEntity<>(truck, HttpStatus.OK);
-    }
-
-    @PutMapping(value = "/truck/{truckid}/departuretime/{departuretime}")
-    public ResponseEntity<?> updateDepartureTime(@PathVariable long truckid, @PathVariable long departuretime){
-        Truck truck = truckService.findTruckById(truckid);
-        truck.setDepartureTime(new Date(departuretime));
-        truck = truckService.save(truck);
-        return new ResponseEntity<>(truck, HttpStatus.OK);
-    }
-
 }

@@ -69,22 +69,27 @@ public class MenuItemServiceImpl implements MenuItemService{
         for(MenuItemPhoto mip : menuItem.getItemPhotos()){
             newMenuItem.getItemPhotos().add(new MenuItemPhoto(newMenuItem, mip.getUrl()));
         }
-
-        double totalScore = 0;
-
         for(MenuItemReview mir: menuItem.getCustomerRatings()){
             User diner = userService.findUserById(mir.getDiner().getUserid());
-            totalScore += mir.getScore();
             newMenuItem.getCustomerRatings().add(new MenuItemReview(diner, newMenuItem, mir.getScore()));
         }
+        newMenuItem = menuItemRepository.save(newMenuItem);
 
-        newMenuItem.setCustomerRatingsAvg(helperFunctions.roundTwoDecimalPlaces(totalScore / newMenuItem.getCustomerRatings().size()));
+        return updateReviewAvg(newMenuItem.getMenuId());
 
-        return menuItemRepository.save(newMenuItem);
+
     }
 
     @Override
     public void deleteAll() {
         menuItemRepository.deleteAll();
+    }
+
+    @Override
+    public MenuItem updateReviewAvg(long id) {
+        MenuItem menuItem = findMenuItemById(id);
+        double totalScore = menuItem.getCustomerRatings().stream().reduce(0.0, (total, rating) -> total += rating.getScore(), Double::sum);
+        menuItem.setCustomerRatingsAvg(helperFunctions.roundTwoDecimalPlaces(totalScore / menuItem.getCustomerRatings().size()));
+        return menuItemRepository.save(menuItem);
     }
 }

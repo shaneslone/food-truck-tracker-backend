@@ -12,4 +12,5 @@ public interface TruckService {
     void deleteAll();
     List<Truck> findByCuisineType(String cuisineType);
     List<Truck> findByCustomerRatingAvg(double score);
+    Truck updateRatingAvg(long id);
 }

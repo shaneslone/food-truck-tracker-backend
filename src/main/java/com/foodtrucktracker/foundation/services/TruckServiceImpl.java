@@ -76,18 +76,15 @@ public class TruckServiceImpl  implements TruckService{
                     .add(new DinerTrucks(diner, newTruck));
         }
 
-        double reviewTotal = 0;
-
         for(DinerTruckReview dtr : truck.getReviews()){
             User user = userService.findUserById(dtr.getDiner().getUserid());
-            reviewTotal += dtr.getScore();
             newTruck.getReviews()
                     .add(new DinerTruckReview(user, newTruck, dtr.getScore()));
         }
 
-        newTruck.setCustomerRatingsAvg(helperFunctions.roundTwoDecimalPlaces(reviewTotal / newTruck.getReviews().size()));
+        newTruck = truckRepository.save(newTruck);
 
-        return truckRepository.save(newTruck);
+        return updateRatingAvg(newTruck.getTruckId());
     }
 
     @Override
@@ -103,5 +100,14 @@ public class TruckServiceImpl  implements TruckService{
     @Override
     public List<Truck> findByCustomerRatingAvg(double score) {
         return truckRepository.findByCustomerRatingsAvgGreaterThan(score);
+    }
+
+    @Override
+    public Truck updateRatingAvg(long id) {
+        Truck truck = findTruckById(id);
+        double reviewTotal = truck.getReviews().stream().reduce(0.0, (total, cur) -> total += cur.getScore(), Double::sum );
+        truck.setCustomerRatingsAvg(helperFunctions.roundTwoDecimalPlaces(reviewTotal / truck.getReviews().size()));
+        truck = truckRepository.save(truck);
+        return truck;
     }
 }

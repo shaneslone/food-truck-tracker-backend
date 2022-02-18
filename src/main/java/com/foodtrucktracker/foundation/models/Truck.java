@@ -154,4 +154,21 @@ public class Truck
     public void setCustomerRatingsAvg(double customerRatingsAvg) {
         this.customerRatingsAvg = customerRatingsAvg;
     }
+
+    @Override
+    public String toString() {
+        return "Truck{" +
+                "truckId=" + truckId +
+                ", name='" + name + '\'' +
+                ", imageOfTruck='" + imageOfTruck + '\'' +
+                ", cuisineType='" + cuisineType + '\'' +
+                ", currentLocation='" + currentLocation + '\'' +
+                ", departureTime=" + departureTime +
+                ", operator=" + operator +
+                ", dinerFavorites=" + dinerFavorites +
+                ", menu=" + menu +
+                ", reviews=" + reviews +
+                ", customerRatingsAvg=" + customerRatingsAvg +
+                '}';
+    }
 }

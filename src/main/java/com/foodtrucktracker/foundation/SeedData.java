@@ -1,7 +1,6 @@
 package com.foodtrucktracker.foundation;
 
 import com.foodtrucktracker.foundation.models.*;
-import com.foodtrucktracker.foundation.repository.MenuItemRepository;
 import com.foodtrucktracker.foundation.services.MenuItemService;
 import com.foodtrucktracker.foundation.services.RoleService;
 import com.foodtrucktracker.foundation.services.TruckService;
