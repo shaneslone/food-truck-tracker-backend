@@ -1,13 +1,7 @@
 package com.foodtrucktracker.foundation.controllers;
 
-import com.foodtrucktracker.foundation.models.MenuItem;
-import com.foodtrucktracker.foundation.models.MenuItemReview;
-import com.foodtrucktracker.foundation.models.Truck;
-import com.foodtrucktracker.foundation.models.User;
-import com.foodtrucktracker.foundation.services.MenuItemReviewService;
-import com.foodtrucktracker.foundation.services.MenuItemService;
-import com.foodtrucktracker.foundation.services.TruckService;
-import com.foodtrucktracker.foundation.services.UserService;
+import com.foodtrucktracker.foundation.models.*;
+import com.foodtrucktracker.foundation.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -35,6 +29,9 @@ public class MenuItemController {
 
     @Autowired
     private MenuItemReviewService menuItemReviewService;
+
+    @Autowired
+    private MenuItemPhotoService menuItemPhotoService;
 
     @GetMapping(value = "/menuitems", produces = "application/json")
     public ResponseEntity<?> listAllMenuItems(){
@@ -88,5 +85,12 @@ public class MenuItemController {
         MenuItem menuItem = menuItemService.findMenuItemById(menuItemId);
         menuItem = menuItemReviewService.save(new MenuItemReview(user, menuItem, rating));
         return new ResponseEntity<>(menuItem, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR')")
+    @PostMapping(value = "/menuitem/{menuItemId}/photo")
+    public ResponseEntity<?> addMenuItemPhoto(@PathVariable long menuItemId, @Valid @RequestBody MenuItemPhoto newPhoto){
+        MenuItemPhoto menuItemPhoto = menuItemPhotoService.save(menuItemId, newPhoto.getUrl());
+        return new ResponseEntity<>(menuItemPhoto, HttpStatus.OK);
     }
 }
