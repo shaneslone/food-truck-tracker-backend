@@ -54,6 +54,10 @@ public class MenuItemServiceImpl implements MenuItemService{
             MenuItem currentMenuItem = findMenuItemById(menuItem.getMenuId());
             helperFunctions.isAuthorizedToMakeChange(currentMenuItem.getTruck().getOperator().getUsername());
             newMenuItem.setMenuId(menuItem.getMenuId());
+            newMenuItem.setTruck(currentMenuItem.getTruck());
+        } else {
+            Truck truck = truckService.findTruckById(menuItem.getTruck().getTruckId());
+            newMenuItem.setTruck(truck);
         }
 //        else {
 //            helperFunctions.isAuthorizedToMakeChange(menuItem.getTruck().getOperator().getUsername());
@@ -62,9 +66,6 @@ public class MenuItemServiceImpl implements MenuItemService{
         newMenuItem.setItemName(menuItem.getItemName());
         newMenuItem.setItemPrice(menuItem.getItemPrice());
         newMenuItem.setItemDescription(menuItem.getItemDescription());
-
-        Truck truck = truckService.findTruckById(menuItem.getTruck().getTruckId());
-        newMenuItem.setTruck(truck);
 
         for(MenuItemPhoto mip : menuItem.getItemPhotos()){
             newMenuItem.getItemPhotos().add(new MenuItemPhoto(newMenuItem, mip.getUrl()));
