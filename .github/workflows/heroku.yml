@@ -53,7 +53,7 @@ jobs:
 
           # (Optional, default: "")
           # Additional options of docker build command.
-          docker_options: "-m 512m --no-cache"
+          docker_options: "-m 512 --no-cache"
 
           # (Optional, default: "web")
           # Select the process type for which you want the docker container to be uploaded.
