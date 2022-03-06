@@ -24,7 +24,7 @@ public class DataSourceConfig
     /**
      * A config var from Heroku giving the url for access to POSTGRESQL. Default to empty string
      */
-    @Value("${spring.datasource.url:}")
+    @Value("${SPRING_DATASOURCE_URL}")
     private String dbURL;
 
     /**
